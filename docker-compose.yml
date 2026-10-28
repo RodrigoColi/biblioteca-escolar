@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: biblioteca
+      POSTGRES_PASSWORD: biblioteca
+      POSTGRES_DB: biblioteca
+      TZ: America/Sao_Paulo
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U biblioteca -d biblioteca"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgres://biblioteca:biblioteca@db:5432/biblioteca?sslmode=disable
+      TZ: America/Sao_Paulo
+    depends_on:
+      db:
+        condition: service_healthy
+    stdin_open: true
+    tty: true
+
+volumes:
+  pgdata:
