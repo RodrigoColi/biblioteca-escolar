@@ -1,0 +1,27 @@
+erDiagram
+    ALUNOS ||--o{ EMPRESTIMOS : "realiza"
+    LIVROS ||--o{ EMPRESTIMOS : "é emprestado em"
+
+    ALUNOS {
+        INTEGER matricula PK "NOT NULL"
+        VARCHAR(100) nome "NOT NULL"
+        VARCHAR(100) email "NOT NULL"
+        VARCHAR(20) turma "NOT NULL"
+    }
+
+    LIVROS {
+        INTEGER id_livro PK "NOT NULL, IDENTITY"
+        VARCHAR(150) titulo "NOT NULL"
+        VARCHAR(100) autor "NOT NULL"
+        VARCHAR(50) genero "NOT NULL"
+        INTEGER ano_publicacao "NOT NULL"
+    }
+
+    EMPRESTIMOS {
+        INTEGER id_emprestimo PK "NOT NULL, IDENTITY"
+        INTEGER matricula FK "NOT NULL"
+        INTEGER id_livro FK "NOT NULL"
+        DATE data_emprestimo "NOT NULL"
+        DATE data_prevista "NOT NULL"
+        DATE data_devolucao "NULL"
+    }
