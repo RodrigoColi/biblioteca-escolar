@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS emprestimos;
+DROP TABLE IF EXISTS livros;
+DROP TABLE IF EXISTS alunos;
